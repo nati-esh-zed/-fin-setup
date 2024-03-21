@@ -26,4 +26,24 @@ setup-fin --typescript-template
 
 This will create a project with a webpack template.
 
+### Running
+
+```sh
+npm run start
+```
+
+### Building
+
+For production build
+
+```sh
+npm run build
+```
+
+For development build
+
+```sh
+npm run build-dev
+```
+
 ***Happy coding!***
