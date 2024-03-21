@@ -41,7 +41,7 @@ function Input(params: Params) {
     tag: 'input',
     attributes: {
       value: username.refer,
-      onInput: (c) => username.value = c.node.value
+      onInput: (c) => username.value = (c.node!as HTMLInputElement).value
     }
   }));
 }
@@ -83,8 +83,8 @@ function App() {
                 ${(logoBorder ? 'Border' : '')} 
                 ${(logoShadow ? 'Shadow' : '')}
               `,
-              alt: logoUri,
-              src: logoUri,
+              alt: logoUri!as string,
+              src: logoUri!as string,
               style: {height: '3rem'}
             }
           })
