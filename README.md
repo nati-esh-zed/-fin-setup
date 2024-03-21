@@ -11,7 +11,6 @@ npm install @nez-fin/setup -g
 ```sh
 mkdir your-project-name
 cd your-project-name
-npm init -y
 ```
 
 ```sh

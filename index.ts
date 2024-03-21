@@ -2,20 +2,20 @@
 
 import { execSync } from 'child_process';
 import {dirname, resolve} from 'path';
-import {copyFileSync, existsSync, mkdirSync} from 'fs';
+import {cpSync, existsSync, mkdirSync} from 'fs';
 import yargs from 'yargs';
+
 
 function ensureDirectoryExistence(filePath) {
   const dirName = dirname(filePath);
   if(existsSync(dirName))
     return true;
-  ensureDirectoryExistence(dirName);
-  mkdirSync(dirName);
+  mkdirSync(dirName, { recursive: true });
 }
 
 function copy(src: string, dst: string) {
   ensureDirectoryExistence(dst);
-  copyFileSync(src, dst);
+  cpSync(src, dst, {recursive: true});
   console.log('Copied: '+dst);
 }
 
@@ -28,15 +28,16 @@ function setupFin(args) {
   console.log('@nez-fin/setup v1.0.0\n');
   const templateTypescript = args.hasOwnProperty('typescriptTemplate');
   const scriptExtenstion   = templateTypescript ? 'ts' : 'js';
-  const tplRoot = resolve(__dirname, './template/');
-  const srcRoot = resolve(__dirname, './template/'+scriptExtenstion);
-  const dstRoot = resolve(__dirname, process.cwd()+'/');
+  const publicDir = resolve(__dirname, './template/public');
+  const rootDir   = resolve(__dirname, './template/root');
+  const srcDir = resolve(__dirname, './template/'+scriptExtenstion);
+  const dstDir = resolve(__dirname, process.cwd()+'/');
   console.log('Template: '+(templateTypescript ? 'typescript' : 'javascript'));
-  copy(resolve(srcRoot, 'index.'+scriptExtenstion), resolve(dstRoot, 'index.'+scriptExtenstion));
-  copy(resolve(tplRoot, 'index.html'), resolve(dstRoot, 'public/index.html'));
-  copy(resolve(tplRoot, 'index.css'), resolve(dstRoot, 'index.css'));
-  copy(resolve(srcRoot, 'webpack.config.js'), resolve(dstRoot, 'webpack.config.js'));
-  copy(resolve(srcRoot, 'package.json'), resolve(dstRoot, 'package.json'));
+  copy(resolve(srcDir, 'index.'+scriptExtenstion), resolve(dstDir, 'index.'+scriptExtenstion));
+  copy(resolve(srcDir, 'webpack.config.js'), resolve(dstDir, 'webpack.config.js'));
+  copy(resolve(srcDir, 'package.json'), resolve(dstDir, 'package.json'));
+  copy(publicDir, resolve(dstDir, 'public'));
+  copy(rootDir, dstDir);
   console.log('');
   execute('npm install');
 }
