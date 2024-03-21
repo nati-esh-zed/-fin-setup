@@ -1,0 +1,22 @@
+{
+  "name": "@nez-fin/setup",
+  "version": "1.0.0",
+  "description": "Project setup script for @nez-fin/core",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "setup-fin": "./index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30"
+  },
+  "dependencies": {
+    "typescript": "^5.4.3",
+    "yargs": "^17.7.2"
+  }
+}
