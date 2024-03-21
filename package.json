@@ -6,9 +6,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nati-esh-zed/-fin-setup.git"
+  },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Natnael Eshetu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nati-esh-zed/-fin-setup/issues"
+  },
+  "homepage": "https://github.com/nati-esh-zed/-fin-setup#readme",
   "bin": {
     "setup-fin": "./index.js"
   },
