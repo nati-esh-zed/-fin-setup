@@ -23,12 +23,14 @@ module.exports = {
     port: 3000,
   },
   optimization: {
+    minimize: true,
     minimizer: [
       new TerserPlugin({
         terserOptions: {
           keep_classnames: true,
-        },
-      }),
+          keep_fnames: true
+        }
+      })
     ],
   },
   stats: 'minimal',

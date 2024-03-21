@@ -1,47 +1,49 @@
-import Manager from '@nez-fin/core/dist/Manager';
+import Engine from '@nez-fin/core/dist/Engine';
 import Variable from '@nez-fin/core/dist/Variable';
-import Component, {chain, inheritParams, Params} from '@nez-fin/core/dist/Component';
+import Component, {merge, chain, Params} from '@nez-fin/core/dist/Component';
 import './index.css';
 
 // define a component classic style
 class Box extends Component {
   constructor(params: Params) {
-    super(inheritParams({}, params));
+    super(params); // Box is automatically chained
   }
 }
 
 // define a component functional style
 function FlexBox(params: Params) {
-  return new Component(chain('FlexBox', {}, params));
+  return new Component(merge(params, {
+    chain: ['FlexBox']
+  }));
 }
 
-// define a component functional style with chain
+// define a component functional style with chain function
 function ColFlexBox(params: Params) {
-  return FlexBox(chain('ColFlexBox', {
+  return FlexBox(chain('ColFlexBox', params, {
     attributes: {
       style: {
         flexDirection: 'column'
       }
     }
-  }, params));
+  }));
 }
 
 // define a component classic style with extend
 class Card extends Box {
   constructor(params: Params) {
-    super(inheritParams({}, params));
+    super(params);
   }
 }
 
 // define a component functional style with chain
-function Input(params?: Params) {
-  return new Component(chain('Input', {
+function Input(params: Params) {
+  return new Component(chain('Input', params, {
     tag: 'input',
     attributes: {
       value: username.refer,
       onInput: (c) => username.value = c.node.value
     }
-  }, params));
+  }));
 }
 
 const logos = [
@@ -54,8 +56,9 @@ const logos = [
 
 export const username = new Variable('guest');
 
-function App(params?: Params) {
-  return new Component(chain('App', {
+function App() {
+  return new Component({
+    chain: ['App'], // another way of chaining
     attributes: {
       id: 'app',
       style: { gap: '.5rem' }
@@ -73,6 +76,7 @@ function App(params?: Params) {
         }},
         children: logos.map(([logoUri, logoBorder, logoShadow]) => 
           new Component({
+            chain: ['Chain'],
             tag: 'img',
             attributes: {
               class: `Logo 
@@ -95,15 +99,15 @@ function App(params?: Params) {
             children: [ 'hello ', username.refer, '!' ]
           }),
           new Card({
-            children: [ Input() ]
+            children: [ Input({}) ]
           })
         ]
       })
     ]
-  }, params));
+  });
 }
 
-export default new Manager(
+export default new Engine(
   document.getElementById('root'), 
   App()
 )
