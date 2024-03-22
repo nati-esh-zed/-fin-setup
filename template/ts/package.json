@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@nez-fin/core": "^1.2.1"
+    "@nez-fin/core": "^1.2.2"
   },
   "devDependencies": {
     "typescript": "^5.4.3",
